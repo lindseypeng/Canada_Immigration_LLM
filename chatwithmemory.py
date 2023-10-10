@@ -59,9 +59,15 @@ if prompt := st.chat_input("what is your question?"):
     lengthofopenai_api_key=len(openai_api_key)
     st.write(lengthofopenai_api_key)
     openai.api_key = openai_api_key
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    msg = response.choices[0].message
+    st.session_state.messages.append(msg)
+    st.chat_message("assistant").write(msg.content)
     #st.write(openai.api_key)
-    llm_name= "gpt-3.5-turbo"
-    llm = ChatOpenAI(model_name = llm_name,temperature=0)
+    #llm_name= "gpt-3.5-turbo"
+    #llm = ChatOpenAI(model_name = llm_name,temperature=0)
 #     persist_directory = './docs/chroma'
 
 #     embedding = OpenAIEmbeddings()
