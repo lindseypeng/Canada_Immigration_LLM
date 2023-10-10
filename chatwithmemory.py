@@ -25,8 +25,6 @@ with st.sidebar:
 ###openai
 
 
-
-
 ###hugging face
 
 #repo_id = "tiiuae/falcon-7b-instruct"
@@ -58,10 +56,14 @@ if prompt := st.chat_input("what is your question?"):
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
     # Display user message in chat message container
-    openai.api_key = openai_api_key
+    lengthofopenai_api_key=len(openai_api_key)
+    st.write(lengthofopenai_api_key)
+    #openai.api_key = openai_api_key
+
     llm_name= "gpt-3.5-turbo"
-    llm = ChatOpenAI(model_name = llm_name,temperature=0)
+    llm = ChatOpenAI(openai_api_key=openai_api_key,model_name = llm_name,temperature=0)
     persist_directory = './docs/chroma'
+
     embedding = OpenAIEmbeddings()
     vectordb = Chroma(
         persist_directory=persist_directory,
