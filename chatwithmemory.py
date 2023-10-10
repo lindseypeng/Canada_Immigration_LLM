@@ -58,8 +58,8 @@ if prompt := st.chat_input("what is your question?"):
     # Display user message in chat message container
     lengthofopenai_api_key=len(openai_api_key)
     st.write(lengthofopenai_api_key)
-    openai.api_key = openai_api_key
-    st.write(openai.api_key)
+    #openai.api_key = openai_api_key
+    #st.write(openai.api_key)
 #     llm_name= "gpt-3.5-turbo"
 #     llm = ChatOpenAI(openai_api_key=openai_api_key,model_name = llm_name,temperature=0)
 #     persist_directory = './docs/chroma'
