@@ -37,29 +37,7 @@ with st.sidebar:
                      #model_kwargs={"temperature":0.5, "max_new_tokens":250})
 ## load context embedding
 #persist_directory = '/Users/linqianpeng/Documents/immigration/docs/chroma'
-persist_directory = './docs/chroma'
-embedding = OpenAIEmbeddings()
-vectordb = Chroma(
-    persist_directory=persist_directory,
-    embedding_function=embedding
-)
-## conversation AI with memory for chat history
-memory = ConversationBufferMemory(
-    memory_key="chat_history",
-    return_messages=True
-)
-retriever=vectordb.as_retriever()
-qa = ConversationalRetrievalChain.from_llm(
-    llm,
-    retriever=retriever,
-    memory=memory)
 
-## conversation AI with no memory, return reference
-qa_chain = RetrievalQA.from_chain_type(
-    llm,
-    retriever=vectordb.as_retriever(),return_source_documents=True,
-    chain_type="stuff"
-)
 
 st.title('question answering canadian immigration')
 
@@ -83,6 +61,29 @@ if prompt := st.chat_input("what is your question?"):
     openai.api_key = openai_api_key
     llm_name= "gpt-3.5-turbo"
     llm = ChatOpenAI(model_name = llm_name,temperature=0)
+    persist_directory = './docs/chroma'
+    embedding = OpenAIEmbeddings()
+    vectordb = Chroma(
+        persist_directory=persist_directory,
+        embedding_function=embedding
+    )
+    ## conversation AI with memory for chat history
+    memory = ConversationBufferMemory(
+        memory_key="chat_history",
+        return_messages=True
+    )
+    retriever=vectordb.as_retriever()
+    qa = ConversationalRetrievalChain.from_llm(
+        llm,
+        retriever=retriever,
+        memory=memory)
+
+    ## conversation AI with no memory, return reference
+    qa_chain = RetrievalQA.from_chain_type(
+        llm,
+        retriever=vectordb.as_retriever(),return_source_documents=True,
+        chain_type="stuff"
+    )
     with st.chat_message("user"):
         st.markdown(prompt)
     # Add user message to chat history
