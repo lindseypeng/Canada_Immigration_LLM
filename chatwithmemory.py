@@ -58,46 +58,46 @@ if prompt := st.chat_input("what is your question?"):
     # Display user message in chat message container
     lengthofopenai_api_key=len(openai_api_key)
     st.write(lengthofopenai_api_key)
-    #openai.api_key = openai_api_key
+    openai.api_key = openai_api_key
+    st.write(openai.api_key)
+#     llm_name= "gpt-3.5-turbo"
+#     llm = ChatOpenAI(openai_api_key=openai_api_key,model_name = llm_name,temperature=0)
+#     persist_directory = './docs/chroma'
 
-    llm_name= "gpt-3.5-turbo"
-    llm = ChatOpenAI(openai_api_key=openai_api_key,model_name = llm_name,temperature=0)
-    persist_directory = './docs/chroma'
+#     embedding = OpenAIEmbeddings()
+#     vectordb = Chroma(
+#         persist_directory=persist_directory,
+#         embedding_function=embedding
+#     )
+#     ## conversation AI with memory for chat history
+#     memory = ConversationBufferMemory(
+#         memory_key="chat_history",
+#         return_messages=True
+#     )
+#     retriever=vectordb.as_retriever()
+#     qa = ConversationalRetrievalChain.from_llm(
+#         llm,
+#         retriever=retriever,
+#         memory=memory)
 
-    embedding = OpenAIEmbeddings()
-    vectordb = Chroma(
-        persist_directory=persist_directory,
-        embedding_function=embedding
-    )
-    ## conversation AI with memory for chat history
-    memory = ConversationBufferMemory(
-        memory_key="chat_history",
-        return_messages=True
-    )
-    retriever=vectordb.as_retriever()
-    qa = ConversationalRetrievalChain.from_llm(
-        llm,
-        retriever=retriever,
-        memory=memory)
-
-    ## conversation AI with no memory, return reference
-    qa_chain = RetrievalQA.from_chain_type(
-        llm,
-        retriever=vectordb.as_retriever(),return_source_documents=True,
-        chain_type="stuff"
-    )
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-# question= st.text_input('Enter your question here')
-    result = qa_chain({"query": prompt})
-    response = result['result']
-    # Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        st.markdown(response)
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
+#     ## conversation AI with no memory, return reference
+#     qa_chain = RetrievalQA.from_chain_type(
+#         llm,
+#         retriever=vectordb.as_retriever(),return_source_documents=True,
+#         chain_type="stuff"
+#     )
+#     with st.chat_message("user"):
+#         st.markdown(prompt)
+#     # Add user message to chat history
+#     st.session_state.messages.append({"role": "user", "content": prompt})
+# # question= st.text_input('Enter your question here')
+#     result = qa_chain({"query": prompt})
+#     response = result['result']
+#     # Display assistant response in chat message container
+#     with st.chat_message("assistant"):
+#         st.markdown(response)
+#     # Add assistant response to chat history
+#     st.session_state.messages.append({"role": "assistant", "content": response})
 # if st.button('Get Answer'):
 #     if question:
 #         #result = qa({"question": question})
