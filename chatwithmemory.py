@@ -25,8 +25,7 @@ with st.sidebar:
 ###openai
 
 
-llm_name= "gpt-3.5-turbo"
-llm = ChatOpenAI(model_name = llm_name,temperature=0)
+
 
 ###hugging face
 
@@ -82,6 +81,8 @@ if prompt := st.chat_input("what is your question?"):
         st.stop()
     # Display user message in chat message container
     openai.api_key = openai_api_key
+    llm_name= "gpt-3.5-turbo"
+    llm = ChatOpenAI(model_name = llm_name,temperature=0)
     with st.chat_message("user"):
         st.markdown(prompt)
     # Add user message to chat history
