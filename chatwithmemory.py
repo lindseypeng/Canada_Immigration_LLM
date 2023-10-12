@@ -11,9 +11,9 @@ from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
 from langchain import HuggingFaceHub, PromptTemplate, LLMChain
 
-with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
+
+openai_api_key = st.sidebar.text_input('OpenAI API Key')
+
 
 
 ##inference api vs inference endpoint hugging face
@@ -60,7 +60,7 @@ if prompt := st.chat_input("what is your question?"):
     st.write(lengthofopenai_api_key)
     openai.api_key = openai_api_key
 
-    #st.write(openai.api_key)
+    st.write(openai.api_key)
     
     llm_name= "gpt-3.5-turbo"
     
