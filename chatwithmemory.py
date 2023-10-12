@@ -67,7 +67,7 @@ if prompt := st.chat_input("what is your question?"):
     llm = ChatOpenAI(openai_api_key=openai_api_key,model_name = llm_name,temperature=0)
     persist_directory = './docs/chroma'
 
-    embedding = OpenAIEmbeddings()
+    embedding = OpenAIEmbeddings(openai_api_key=openai.api_key)
     vectordb = Chroma(
          persist_directory=persist_directory,
          embedding_function=embedding
