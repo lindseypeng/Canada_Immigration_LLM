@@ -10,9 +10,11 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
 from langchain import HuggingFaceHub, PromptTemplate, LLMChain
+
 __import__('pysqlite3')
 import sys
 sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+import sqlite3
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
@@ -45,12 +47,11 @@ st.title("💬 Chatbot")
 st.caption("🚀 A streamlit chatbot for Canadian PR powered by OpenAI LLM")
 
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
 # Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
 
 # React to user input
 if prompt := st.chat_input("what is your question?"):
