@@ -10,7 +10,9 @@ from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
 from langchain import HuggingFaceHub, PromptTemplate, LLMChain
-
+__import__('pysqlite3')
+import sys
+sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
 
 openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
@@ -68,10 +70,7 @@ if prompt := st.chat_input("what is your question?"):
     persist_directory = './docs/chroma'
 
     embedding = OpenAIEmbeddings(openai_api_key=openai.api_key)
-    vectordb = Chroma(
-         persist_directory=persist_directory,
-         embedding_function=embedding
-     )
+    vectordb = Chroma(persist_directory=persist_directory,embedding_function=embedding)
 #     ## conversation AI with memory for chat history
 #     memory = ConversationBufferMemory(
 #         memory_key="chat_history",
