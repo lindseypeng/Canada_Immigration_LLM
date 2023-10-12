@@ -50,8 +50,8 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
 # Display chat messages from history on app rerun
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
+#for msg in st.session_state.messages:
+ #   st.chat_message(msg["role"]).write(msg["content"])
 
 # React to user input
 if prompt := st.chat_input("what is your question?"):
@@ -59,8 +59,8 @@ if prompt := st.chat_input("what is your question?"):
         st.info("Please add your OpenAI API key to continue.")
         st.stop()
     # Display user message in chat message container
-    lengthofopenai_api_key=len(openai_api_key)
-    st.write(lengthofopenai_api_key)
+    #lengthofopenai_api_key=len(openai_api_key)
+    #st.write(lengthofopenai_api_key)
     openai.api_key = openai_api_key
 
     st.write(openai.api_key)
